@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# TypeScript build artifacts
+dist/
+*.tsbuildinfo
+*.js.map
+
+# Environment
+.env
+.env.local
+
+# Test output
+coverage/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/settings.json
+
+# Docker volumes (local data)
+# (managed by docker-compose, not in repo)
