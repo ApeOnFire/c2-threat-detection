@@ -78,7 +78,13 @@ export async function eventsRoutes(app: FastifyInstance) {
     // jobId makes the enqueue idempotent: BullMQ will not add a duplicate job
     // while one with the same ID is already in the queue.
     try {
-      await queue.add('detection-event', enrichedEvent, { jobId: enrichedEvent.eventId });
+      await queue.add('detection-event', enrichedEvent, {
+        jobId: enrichedEvent.eventId,
+        attempts: 3,
+        backoff: { type: 'exponential', delay: 1000 },
+        removeOnComplete: 1000,
+        removeOnFail: 500,
+      });
     } catch (err) {
       logger.error({ err, traceId }, 'enqueue failed — alarm persisted, event not indexed');
     }
