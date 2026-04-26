@@ -1,0 +1,20 @@
+{
+  "name": "@vantage/telemetry-simulator",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx --env-file=../../.env src/index.ts",
+    "dev": "tsx watch --env-file=../../.env src/index.ts"
+  },
+  "dependencies": {
+    "@vantage/types": "workspace:*",
+    "fastify": "^5.0.0",
+    "pino": "^10.0.0",
+    "prom-client": "^15.0.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.0.0",
+    "vitest": "^4.0.0"
+  }
+}
