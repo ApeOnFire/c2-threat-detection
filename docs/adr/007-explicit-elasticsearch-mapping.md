@@ -12,7 +12,7 @@ Elasticsearch's dynamic mapping infers field types from the first document index
 
 ## Decision
 
-event-store-service creates the `detection-events` index with an explicit mapping on startup if it does not already exist. `deviceId`, `eventType`, `alarmStatus`, and `siteId` are mapped as `keyword`. `timestamp` is mapped as `date`. `peakCountRate` and `backgroundCountRate` are mapped as `float`. The `payload` object is mapped as `nested`.
+event-store-service creates the `detection-events` index with an explicit mapping on startup if it does not already exist. `deviceId`, `eventType`, `alarmStatus`, and `siteId` are mapped as `keyword`. `timestamp` is mapped as `date`. `peakCountRate` and `backgroundCountRate` are mapped as `float`. The `payload` object is mapped as `object` (see ADR-009).
 
 ## Consequences
 

@@ -19,4 +19,4 @@ The LISTEN subscription uses a dedicated `pg.Client`, not a connection from the 
 ## Consequences
 
 - Rule changes are reflected within ~1 second with no service restart.
-- The dedicated client must be monitored: an unrecoverable connection error exits the process (K8s restarts it), which is preferable to silently serving stale rules.
+- The dedicated client must be monitored: an unrecoverable connection error exits the process (K8s restarts it), which is preferable to silently serving stale rules. This is the inverse of the BullMQ worker pattern — a dropped worker Redis connection is recoverable via ioredis reconnect with no state loss, so the worker does not exit. A dropped LISTEN connection leaves the rule cache stale with no recovery path short of restart.
