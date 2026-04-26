@@ -1,5 +1,5 @@
 ---
-status: Draft
+status: Implemented
 created: 2026-04-24
 updated: 2026-04-25
 related_docs:
