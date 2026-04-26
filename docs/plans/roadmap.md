@@ -142,7 +142,7 @@ Each phase has its own detailed plan document in `docs/plans/`.
 
 ## Phase 6: api-service
 
-**Plan:** `docs/plans/phase-6-api-service.md`
+**Plan:** [phase-6-api-service.md](phase-6-api-service.md)
 
 **What gets built:**
 - `apps/api-service/` service (port 3004)
@@ -165,7 +165,7 @@ Each phase has its own detailed plan document in `docs/plans/`.
 
 ## Phase 7: Angular Dashboard
 
-**Plan:** `docs/plans/phase-7-angular-dashboard.md`
+**Plan:** [phase-7-angular-dashboard.md](phase-7-angular-dashboard.md)
 
 **What gets built:**
 - `apps/dashboard/` — Angular 21 + PrimeNG 21 application
@@ -183,7 +183,7 @@ Each phase has its own detailed plan document in `docs/plans/`.
 
 ## Phase 8: Helm Charts
 
-**Plan:** `docs/plans/phase-8-helm-charts.md`
+**Plan:** [phase-8-helm-charts.md](phase-8-helm-charts.md)
 
 **What gets built:**
 - Infrastructure sub-charts: `helm/charts/postgresql/`, `helm/charts/redis/`, `helm/charts/elasticsearch/`
@@ -213,7 +213,7 @@ Each phase has its own detailed plan document in `docs/plans/`.
 
 ## Phase 9: Local K3s Deployment
 
-**Plan:** `docs/plans/phase-9-local-k3s.md`
+**Plan:** [phase-9-local-k3s.md](phase-9-local-k3s.md)
 
 **What gets built:**
 - Rancher Desktop configured as local K3s environment
@@ -251,7 +251,7 @@ helm install vantage-demo helm/vantage-demo \
 
 ## Phase 10: Observability
 
-**Plan:** `docs/plans/phase-10-observability.md`
+**Plan:** [phase-10-observability.md](phase-10-observability.md)
 
 **What gets built:**
 - Prometheus chart (`prometheus-community/prometheus`) — static scrape config for all six services
@@ -272,7 +272,7 @@ An implementation agent assigned Phase 10 should: write all Helm chart scaffoldi
 
 ## Phase 11: CI/CD
 
-**Plan:** `docs/plans/phase-11-cicd.md`
+**Plan:** [phase-11-cicd.md](phase-11-cicd.md)
 
 **What gets built:**
 - Expansion of `.github/workflows/ci.yml` — adds `build` job (Docker builds for all six services) to the existing `typecheck`, `lint`, `test` jobs from Phase 1
@@ -287,7 +287,7 @@ An implementation agent assigned Phase 10 should: write all Helm chart scaffoldi
 
 ## Phase 12: EC2 Deployment
 
-**Plan:** `docs/plans/phase-12-ec2-deployment.md`
+**Plan:** [phase-12-ec2-deployment.md](phase-12-ec2-deployment.md)
 
 **What gets built:**
 - Provisioning runbook: `t3.xlarge`, Rocky Linux 9 AMI, K3s install (no host-level vm.max_map_count needed — handled by Elasticsearch initContainer)

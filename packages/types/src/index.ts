@@ -61,8 +61,8 @@ export interface EvaluateResult {
 export interface DeviceState {
   deviceId: string;
   deviceType: string;
-  lastSeen: string;          // ISO8601
-  backgroundCountRate: number;
+  lastSeen: string | null;          // null when device is OFFLINE
+  backgroundCountRate: number | null; // null when device is OFFLINE
   status: 'ONLINE' | 'OFFLINE';
 }
 
