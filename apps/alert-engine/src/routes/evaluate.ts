@@ -19,30 +19,54 @@ export async function evaluateRoutes(app: FastifyInstance) {
       return reply.send({ alarmTriggered: false });
     }
 
-    // TypeScript narrows here: result is { alarmTriggered: true; alarmSubtype: string }
-
     const radiationPayload =
       event.payload.type === 'RADIATION_SCAN'
         ? (event.payload as RadiationPayload)
         : null;
 
-    const insertResult = await pool.query<{ id: string }>(
-      `INSERT INTO alarms
-         (device_id, site_id, event_type, alarm_subtype, peak_count_rate, isotope, triggered_at)
-       VALUES ($1, $2, $3, $4, $5, $6, $7)
-       RETURNING id`,
-      [
-        event.deviceId,
-        event.siteId,
-        event.eventType,
-        result.alarmSubtype,
-        radiationPayload?.peakCountRate ?? null,
-        radiationPayload?.isotope ?? null,
-        event.timestamp,
-      ],
-    );
+    const client = await pool.connect();
+    let alarmId: string;
+    try {
+      await client.query('BEGIN');
 
-    const alarmId = insertResult.rows[0].id;
+      const insertResult = await client.query<{ id: string }>(
+        `INSERT INTO alarms
+           (event_id, device_id, site_id, event_type, alarm_subtype,
+            peak_count_rate, isotope, triggered_at)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+         ON CONFLICT (event_id) DO NOTHING
+         RETURNING id`,
+        [
+          event.eventId,
+          event.deviceId,
+          event.siteId,
+          event.eventType,
+          result.alarmSubtype,
+          radiationPayload?.peakCountRate ?? null,
+          radiationPayload?.isotope ?? null,
+          event.timestamp,
+        ],
+      );
+
+      if (insertResult.rows.length === 0) {
+        // Idempotent re-evaluation: alarm already exists for this eventId.
+        // Return the existing alarmId without creating a duplicate row.
+        const existing = await client.query<{ id: string }>(
+          'SELECT id FROM alarms WHERE event_id = $1',
+          [event.eventId],
+        );
+        alarmId = existing.rows[0].id;
+      } else {
+        alarmId = insertResult.rows[0].id;
+      }
+
+      await client.query('COMMIT');
+    } catch (err) {
+      await client.query('ROLLBACK').catch(() => {});
+      throw err;
+    } finally {
+      client.release();
+    }
 
     end();
 

@@ -63,7 +63,7 @@ Each phase has its own detailed plan document in `docs/plans/`.
 
 ## Phase 2: alert-engine
 
-**Plan:** `docs/plans/phase-2-alert-engine.md`
+**Plan:** [phase-2-alert-engine.md](phase-2-alert-engine.md)
 
 **What gets built:**
 - `apps/alert-engine/` service scaffolding
@@ -88,7 +88,7 @@ Each phase has its own detailed plan document in `docs/plans/`.
 
 ## Phase 3: ingestion-service
 
-**Plan:** `docs/plans/phase-3-ingestion-service.md`
+**Plan:** [phase-3-ingestion-service.md](phase-3-ingestion-service.md)
 
 **What gets built:**
 - `apps/ingestion-service/` service scaffolding
@@ -106,7 +106,7 @@ Each phase has its own detailed plan document in `docs/plans/`.
 
 ## Phase 4: telemetry-simulator
 
-**Plan:** `docs/plans/phase-4-telemetry-simulator.md`
+**Plan:** [phase-4-telemetry-simulator.md](phase-4-telemetry-simulator.md)
 
 **What gets built:**
 - `apps/telemetry-simulator/` service (port 3000)
@@ -125,7 +125,7 @@ Each phase has its own detailed plan document in `docs/plans/`.
 
 ## Phase 5: event-store-service
 
-**Plan:** `docs/plans/phase-5-event-store-service.md`
+**Plan:** [phase-5-event-store-service.md](phase-5-event-store-service.md)
 
 **What gets built:**
 - `apps/event-store-service/` service (port 3003 — for `/metrics` only; no inbound HTTP beyond that)

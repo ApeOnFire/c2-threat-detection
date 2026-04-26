@@ -66,6 +66,13 @@ export interface DeviceState {
   status: 'ONLINE' | 'OFFLINE';
 }
 
+// Shared queue names — must match exactly between producer (ingestion-service)
+// and consumer (event-store-service). Using a shared constant eliminates the risk
+// of a silent cross-service name mismatch.
+export const QUEUE_NAMES = {
+  DETECTION_EVENTS: 'detection-events',
+} as const;
+
 // Alarm record as stored in PostgreSQL and returned by GET /api/alarms
 export interface Alarm {
   id: string;

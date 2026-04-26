@@ -1,7 +1,7 @@
 ---
-status: Ready for Implementation
+status: Implemented
 created: 2026-04-25
-updated: 2026-04-27
+updated: 2026-04-26
 related_docs:
   - docs/build-spec-vantage-demo.md
   - docs/plans/roadmap.md
