@@ -57,17 +57,19 @@ function buildHeartbeat(device: Device): Heartbeat {
   };
 }
 
+const handles: NodeJS.Timeout[] = [];
+
 export function startDetectionLoop(): void {
   logger.info(
     { intervalMs: EVENT_INTERVAL_MS, deviceCount: DEVICES.length },
     'starting detection event loops',
   );
   for (const device of DEVICES) {
-    setInterval(() => {
+    handles.push(setInterval(() => {
       emitEvent(buildDetectionEvent(device)).catch((err) => {
         logger.warn({ err, deviceId: device.deviceId }, 'failed to emit event');
       });
-    }, EVENT_INTERVAL_MS);
+    }, EVENT_INTERVAL_MS));
   }
 }
 
@@ -77,10 +79,17 @@ export function startHeartbeatLoop(): void {
     'starting heartbeat loops',
   );
   for (const device of DEVICES) {
-    setInterval(() => {
+    handles.push(setInterval(() => {
       emitHeartbeat(buildHeartbeat(device)).catch((err) => {
         logger.warn({ err, deviceId: device.deviceId }, 'failed to emit heartbeat');
       });
-    }, HEARTBEAT_INTERVAL_MS);
+    }, HEARTBEAT_INTERVAL_MS));
   }
+}
+
+export function stopAllLoops(): void {
+  for (const handle of handles) {
+    clearInterval(handle);
+  }
+  handles.length = 0;
 }

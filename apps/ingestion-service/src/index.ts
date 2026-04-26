@@ -19,10 +19,19 @@ async function main() {
 
   const shutdown = async () => {
     logger.info('shutdown signal received — closing gracefully');
-    await app.close();
-    await queue.close();
-    await connection.quit();
-    await redis.quit();
+    const timeout = new Promise<never>((_, reject) => {
+      const t = setTimeout(() => reject(new Error('shutdown timeout')), 10_000);
+      t.unref();
+    });
+    await Promise.race([
+      (async () => {
+        await app.close();
+        await queue.close();
+        await connection.quit();
+        await redis.quit();
+      })(),
+      timeout,
+    ]);
     process.exit(0);
   };
 

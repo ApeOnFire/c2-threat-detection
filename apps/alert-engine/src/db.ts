@@ -28,6 +28,8 @@ export async function loadRules(): Promise<void> {
   logger.info({ count: result.rows.length }, 'alarm rules loaded');
 }
 
+let listenerClient: Client | null = null;
+
 export async function startRuleListener(): Promise<void> {
   const client = new Client({
     connectionString: process.env.DATABASE_URL,
@@ -35,6 +37,7 @@ export async function startRuleListener(): Promise<void> {
 
   await client.connect();
   await client.query('LISTEN alarm_rules_updated');
+  listenerClient = client;
 
   client.on('notification', () => {
     loadRules().catch((err) => {
@@ -49,4 +52,11 @@ export async function startRuleListener(): Promise<void> {
   });
 
   logger.info('listening for alarm_rules_updated notifications');
+}
+
+export async function stopRuleListener(): Promise<void> {
+  if (listenerClient) {
+    await listenerClient.end();
+    listenerClient = null;
+  }
 }
