@@ -3,7 +3,8 @@
     "allow": [
       "mcp__claude_ai_context7__resolve-library-id",
       "mcp__aws-mcp__aws___search_documentation",
-      "mcp__aws-mcp__aws___suggest_aws_commands"
+      "mcp__aws-mcp__aws___suggest_aws_commands",
+      "mcp__aws-mcp__aws___call_aws"
     ],
     "additionalDirectories": [
       "c:\\Users\\dunca\\.claude\\projects\\c--Users-dunca-PARA-Areas-AF--Ape-On-Fire-Playground-c2-threat-detection\\memory"
