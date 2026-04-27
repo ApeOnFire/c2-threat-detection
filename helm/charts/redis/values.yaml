@@ -1,0 +1,6 @@
+image:
+  repository: redis
+  tag: "8-alpine"
+persistence:
+  size: 1Gi
+  storageClass: ""

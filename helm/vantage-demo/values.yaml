@@ -1,0 +1,102 @@
+global:
+  imageTag: latest
+  imagePullPolicy: IfNotPresent
+  postgres:
+    user: vantage
+    password: vantage
+    database: vantage
+    port: 5432
+  redis:
+    port: 6379
+  elasticsearch:
+    port: 9200
+  services:
+    telemetrySimulator:
+      port: 3000
+    ingestionService:
+      port: 3001
+    alertEngine:
+      port: 3002
+    eventStoreService:
+      port: 3003
+    apiService:
+      port: 3004
+    dashboard:
+      port: 80
+
+postgres:
+  enabled: true
+  image:
+    repository: postgres
+    tag: "18-alpine"
+  persistence:
+    size: 1Gi
+    storageClass: ""
+
+redis:
+  enabled: true
+  image:
+    repository: redis
+    tag: "8-alpine"
+  persistence:
+    size: 1Gi
+    storageClass: ""
+
+elasticsearch:
+  enabled: true
+  image:
+    repository: docker.elastic.co/elasticsearch/elasticsearch
+    tag: "8.17.0"
+  javaOpts: "-Xms512m -Xmx512m"
+  resources:
+    requests:
+      memory: "1Gi"
+      cpu: "250m"
+    limits:
+      memory: "1Gi"
+      cpu: "1000m"
+  persistence:
+    size: 5Gi
+    storageClass: ""
+
+telemetry-simulator:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: vantage/telemetry-simulator
+    tag: ""
+
+ingestion-service:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: vantage/ingestion-service
+    tag: ""
+
+alert-engine:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: vantage/alert-engine
+    tag: ""
+
+event-store-service:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: vantage/event-store-service
+    tag: ""
+
+api-service:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: vantage/api-service
+    tag: ""
+
+dashboard:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: vantage/dashboard
+    tag: ""

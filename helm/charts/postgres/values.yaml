@@ -1,0 +1,13 @@
+image:
+  repository: postgres
+  tag: "18-alpine"
+persistence:
+  size: 1Gi
+  storageClass: ""
+
+global:
+  postgres:
+    user: vantage
+    password: vantage
+    database: vantage
+    port: 5432

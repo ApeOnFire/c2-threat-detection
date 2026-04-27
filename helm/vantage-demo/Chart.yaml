@@ -1,0 +1,44 @@
+apiVersion: v2
+name: vantage-demo
+description: Vantage radiation detection C2 platform
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+
+dependencies:
+  - name: postgres
+    version: "0.1.0"
+    repository: "file://../charts/postgres"
+    condition: postgres.enabled
+  - name: redis
+    version: "0.1.0"
+    repository: "file://../charts/redis"
+    condition: redis.enabled
+  - name: elasticsearch
+    version: "0.1.0"
+    repository: "file://../charts/elasticsearch"
+    condition: elasticsearch.enabled
+  - name: telemetry-simulator
+    version: "0.1.0"
+    repository: "file://../charts/telemetry-simulator"
+    condition: telemetry-simulator.enabled
+  - name: ingestion-service
+    version: "0.1.0"
+    repository: "file://../charts/ingestion-service"
+    condition: ingestion-service.enabled
+  - name: alert-engine
+    version: "0.1.0"
+    repository: "file://../charts/alert-engine"
+    condition: alert-engine.enabled
+  - name: event-store-service
+    version: "0.1.0"
+    repository: "file://../charts/event-store-service"
+    condition: event-store-service.enabled
+  - name: api-service
+    version: "0.1.0"
+    repository: "file://../charts/api-service"
+    condition: api-service.enabled
+  - name: dashboard
+    version: "0.1.0"
+    repository: "file://../charts/dashboard"
+    condition: dashboard.enabled

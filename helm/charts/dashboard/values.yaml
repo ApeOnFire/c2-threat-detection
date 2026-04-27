@@ -1,0 +1,10 @@
+replicaCount: 1
+image:
+  repository: vantage/dashboard
+  tag: ""
+service:
+  port: 80
+
+global:
+  imageTag: latest
+  imagePullPolicy: IfNotPresent

@@ -1,0 +1,14 @@
+replicaCount: 1
+image:
+  repository: vantage/event-store-service
+  tag: ""
+service:
+  port: 3003
+
+global:
+  imageTag: latest
+  imagePullPolicy: IfNotPresent
+  redis:
+    port: 6379
+  elasticsearch:
+    port: 9200

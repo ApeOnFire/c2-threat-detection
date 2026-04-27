@@ -1,0 +1,18 @@
+replicaCount: 1
+image:
+  repository: vantage/alert-engine
+  tag: ""
+service:
+  port: 3002
+
+global:
+  imageTag: latest
+  imagePullPolicy: IfNotPresent
+  postgres:
+    user: vantage
+    password: vantage
+    database: vantage
+    port: 5432
+  services:
+    apiService:
+      port: 3004

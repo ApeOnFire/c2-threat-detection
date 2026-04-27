@@ -1,0 +1,30 @@
+dependencies:
+- name: postgres
+  repository: file://../charts/postgres
+  version: 0.1.0
+- name: redis
+  repository: file://../charts/redis
+  version: 0.1.0
+- name: elasticsearch
+  repository: file://../charts/elasticsearch
+  version: 0.1.0
+- name: telemetry-simulator
+  repository: file://../charts/telemetry-simulator
+  version: 0.1.0
+- name: ingestion-service
+  repository: file://../charts/ingestion-service
+  version: 0.1.0
+- name: alert-engine
+  repository: file://../charts/alert-engine
+  version: 0.1.0
+- name: event-store-service
+  repository: file://../charts/event-store-service
+  version: 0.1.0
+- name: api-service
+  repository: file://../charts/api-service
+  version: 0.1.0
+- name: dashboard
+  repository: file://../charts/dashboard
+  version: 0.1.0
+digest: sha256:5ed61e97567ef1443daa32048cb72ce5f6486e3650a17f5990c4977677e898aa
+generated: "2026-04-27T08:23:16.3945616+01:00"

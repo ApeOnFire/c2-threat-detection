@@ -1,0 +1,15 @@
+elasticsearch:
+  javaOpts: "-Xms1g -Xmx1g"
+  resources:
+    requests:
+      memory: "2Gi"
+      cpu: "500m"
+    limits:
+      memory: "2Gi"
+      cpu: "1000m"
+  persistence:
+    size: 10Gi
+
+postgres:
+  persistence:
+    size: 5Gi

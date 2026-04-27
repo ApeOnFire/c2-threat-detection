@@ -1,0 +1,22 @@
+replicaCount: 1
+image:
+  repository: vantage/api-service
+  tag: ""
+service:
+  port: 3004
+
+global:
+  imageTag: latest
+  imagePullPolicy: IfNotPresent
+  postgres:
+    user: vantage
+    password: vantage
+    database: vantage
+    port: 5432
+  redis:
+    port: 6379
+  elasticsearch:
+    port: 9200
+  services:
+    telemetrySimulator:
+      port: 3000

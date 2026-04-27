@@ -1,0 +1,14 @@
+image:
+  repository: docker.elastic.co/elasticsearch/elasticsearch
+  tag: "8.17.0"
+javaOpts: "-Xms512m -Xmx512m"
+resources:
+  requests:
+    memory: "1Gi"
+    cpu: "250m"
+  limits:
+    memory: "1Gi"
+    cpu: "1000m"
+persistence:
+  size: 5Gi
+  storageClass: ""

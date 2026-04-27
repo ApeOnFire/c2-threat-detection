@@ -1,0 +1,15 @@
+replicaCount: 1
+image:
+  repository: vantage/ingestion-service
+  tag: ""
+service:
+  port: 3001
+
+global:
+  imageTag: latest
+  imagePullPolicy: IfNotPresent
+  redis:
+    port: 6379
+  services:
+    alertEngine:
+      port: 3002

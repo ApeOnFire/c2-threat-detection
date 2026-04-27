@@ -1,0 +1,13 @@
+replicaCount: 1
+image:
+  repository: vantage/telemetry-simulator
+  tag: ""
+service:
+  port: 3000
+
+global:
+  imageTag: latest
+  imagePullPolicy: IfNotPresent
+  services:
+    ingestionService:
+      port: 3001
