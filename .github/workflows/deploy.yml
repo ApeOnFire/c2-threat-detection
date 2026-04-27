@@ -4,7 +4,7 @@ on:
   workflow_run:
     workflows: [CI]
     types: [completed]
-    branches: [main]
+    branches: [master]
 
 concurrency:
   group: deploy
@@ -73,7 +73,7 @@ jobs:
             "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml; \
              set -e && \
              cd /opt/vantage-demo && \
-             git pull origin main && \
+             git pull origin master && \
              helm repo add prometheus-community https://prometheus-community.github.io/helm-charts --force-update && \
              helm repo add grafana https://grafana.github.io/helm-charts --force-update && \
              helm repo update && \
