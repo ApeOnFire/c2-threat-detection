@@ -1,0 +1,33 @@
+<div class="alarms-section">
+  <h2 class="section-title">
+    Active Alarms
+    @if (alarms().length > 0) {
+      <span class="alarm-count">{{ alarms().length }}</span>
+    }
+  </h2>
+
+  @if (alarms().length === 0) {
+    <div class="empty-state">No active alarms</div>
+  } @else {
+    <div class="alarms-list">
+      @for (alarm of alarms(); track alarm.id) {
+        <div class="alarm-row" [@slideIn]>
+          <span class="status-badge" [class]="alarm.alarmSubtype === 'ISOTOPE_IDENTIFIED' ? 'badge-isotope' : 'badge-norm'">
+            {{ alarm.alarmSubtype | alarmLabel }}
+          </span>
+          <span class="alarm-device">{{ alarm.deviceId }}</span>
+          <span class="alarm-time">{{ alarm.triggeredAt | date:'HH:mm:ss' }}</span>
+          <span class="alarm-peak">{{ alarm.peakCountRate != null ? (alarm.peakCountRate + ' cps') : '—' }}</span>
+          <span class="alarm-isotope">{{ alarm.isotope ?? '—' }}</span>
+          <p-button
+            label="Acknowledge"
+            size="small"
+            severity="secondary"
+            [loading]="isAcknowledging(alarm.id)"
+            (onClick)="acknowledge(alarm)"
+          />
+        </div>
+      }
+    </div>
+  }
+</div>

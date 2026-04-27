@@ -1,0 +1,14 @@
+<div class="live-ops">
+  <div class="section-header">
+    <h1 class="view-title">Live Operations</h1>
+    <span class="online-count">{{ onlineCount() }} / {{ devices().length }} devices online</span>
+  </div>
+
+  <div class="device-grid">
+    @for (device of devices(); track device.deviceId) {
+      <app-device-card [device]="device" />
+    }
+  </div>
+
+  <app-active-alarms />
+</div>

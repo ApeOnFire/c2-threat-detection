@@ -1,0 +1,22 @@
+<p-drawer [(visible)]="visible" header="Test Mode — Scenario Simulation" position="right" [style]="{ width: '380px' }">
+  <div class="test-panel-intro">
+    Inject a simulated detection event to exercise the full alarm path end-to-end. Alarms will appear in the Active Alarms panel within 2 seconds.
+  </div>
+
+  <div class="scenario-list">
+    @for (scenario of scenarios; track scenario.name) {
+      <div class="scenario-card">
+        <div class="scenario-label">{{ scenario.label }}</div>
+        <div class="scenario-desc">{{ scenario.description }}</div>
+        <p-button
+          [label]="'Trigger ' + scenario.label"
+          [severity]="scenario.severity"
+          size="small"
+          [loading]="isLoading(scenario.name)"
+          (onClick)="trigger(scenario)"
+          styleClass="scenario-btn"
+        />
+      </div>
+    }
+  </div>
+</p-drawer>

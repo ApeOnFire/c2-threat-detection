@@ -1,0 +1,12 @@
+{
+  "/api": {
+    "target": "http://localhost:3004",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/ws": {
+    "target": "ws://localhost:3004",
+    "ws": true,
+    "secure": false
+  }
+}

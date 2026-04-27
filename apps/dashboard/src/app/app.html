@@ -1,0 +1,30 @@
+<div class="app-shell">
+  <header class="site-header">
+    <div class="header-brand">
+      <span class="header-site">POE-ALPHA</span>
+      <span class="header-sep">·</span>
+      <span class="header-title">Vantage Platform</span>
+    </div>
+    <nav class="header-nav">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Live Operations</a>
+      <a routerLink="/events" routerLinkActive="active">Event Search</a>
+      <a routerLink="/alarms" routerLinkActive="active">Alarm History</a>
+    </nav>
+    <p-button
+      label="Test Mode"
+      icon="pi pi-play-circle"
+      severity="secondary"
+      size="small"
+      (onClick)="toggleTestPanel()"
+    />
+  </header>
+
+  <main class="main-content">
+    <router-outlet />
+  </main>
+</div>
+
+<p-toast position="top-right" />
+<app-test-mode-panel
+  [(visible)]="testPanelVisible"
+/>

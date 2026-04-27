@@ -1,0 +1,25 @@
+<p-card>
+  <ng-template pTemplate="header">
+    <div class="card-header">
+      <div class="card-id">{{ device().deviceId }}</div>
+      <span class="status-badge" [class]="device().status === 'ONLINE' ? 'badge-online' : 'badge-offline'">
+        {{ device().status }}
+      </span>
+    </div>
+  </ng-template>
+
+  <div class="card-body">
+    <div class="card-row">
+      <span class="label">Type</span>
+      <span>{{ device().deviceType }}</span>
+    </div>
+    <div class="card-row">
+      <span class="label">Last Scan</span>
+      <span>{{ device().lastSeen ? (device().lastSeen | date:'HH:mm:ss') : '—' }}</span>
+    </div>
+    <div class="card-row">
+      <span class="label">Background</span>
+      <span>{{ device().backgroundCountRate != null ? (device().backgroundCountRate + ' cps') : '—' }}</span>
+    </div>
+  </div>
+</p-card>

@@ -1,0 +1,53 @@
+<div>
+  <h1 class="view-title">Alarm History</h1>
+
+  <div class="search-bar">
+    <p-select [options]="statusOptions" [ngModel]="status()" (ngModelChange)="status.set($event); load()" optionLabel="label" optionValue="value" placeholder="Status" />
+    <p-select [options]="deviceOptions()" [ngModel]="deviceId()" (ngModelChange)="deviceId.set($event); load()" optionLabel="label" optionValue="value" placeholder="Device" />
+    <p-select [options]="subtypeOptions" [ngModel]="alarmSubtype()" (ngModelChange)="alarmSubtype.set($event); load()" optionLabel="label" optionValue="value" placeholder="Type" />
+    <p-datepicker [ngModel]="dateRange()" (ngModelChange)="dateRange.set($event); load()" selectionMode="range" placeholder="Date range" dateFormat="yy-mm-dd" showIcon />
+    <p-button label="Clear" severity="secondary" (onClick)="clear()" />
+  </div>
+
+  <p-table
+    [value]="alarms()"
+    [lazy]="true"
+    [first]="page() * pageSize"
+    [totalRecords]="total()"
+    [rows]="pageSize"
+    [paginator]="true"
+    [loading]="loading()"
+    (onPage)="onPageChange($event)"
+    styleClass="p-datatable-sm"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Triggered</th>
+        <th>Device</th>
+        <th>Type</th>
+        <th>Peak (cps)</th>
+        <th>Isotope</th>
+        <th>Status</th>
+        <th>Acknowledged</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-alarm>
+      <tr>
+        <td>{{ alarm.triggeredAt | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+        <td>{{ alarm.deviceId }}</td>
+        <td>{{ alarm.alarmSubtype | alarmLabel }}</td>
+        <td>{{ alarm.peakCountRate ?? '—' }}</td>
+        <td>{{ alarm.isotope ?? '—' }}</td>
+        <td>
+          <span class="status-badge" [class]="alarm.status === 'ACTIVE' ? 'badge-active' : 'badge-acknowledged'">
+            {{ alarm.status }}
+          </span>
+        </td>
+        <td>{{ alarm.acknowledgedAt ? (alarm.acknowledgedAt | date:'HH:mm:ss') : '—' }}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr><td colspan="7" style="text-align:center;color:#94a3b8;padding:2rem">No alarms found</td></tr>
+    </ng-template>
+  </p-table>
+</div>

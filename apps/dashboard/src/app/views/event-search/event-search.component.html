@@ -1,0 +1,52 @@
+<div>
+  <h1 class="view-title">Detection Event Search</h1>
+
+  <div class="search-bar">
+    <input pInputText placeholder="Search (device, isotope, status…)" [ngModel]="q()" (ngModelChange)="q.set($event)" class="search-input" />
+    <p-select [options]="deviceOptions()" [ngModel]="deviceId()" (ngModelChange)="deviceId.set($event)" optionLabel="label" optionValue="value" placeholder="Device" />
+    <p-select [options]="eventTypeOptions" [ngModel]="eventType()" (ngModelChange)="eventType.set($event)" optionLabel="label" optionValue="value" placeholder="Event Type" />
+    <p-datepicker [ngModel]="dateRange()" (ngModelChange)="dateRange.set($event)" selectionMode="range" placeholder="Date range" dateFormat="yy-mm-dd" showIcon />
+    <p-button label="Search" icon="pi pi-search" (onClick)="search()" />
+    <p-button label="Clear" severity="secondary" (onClick)="clear()" />
+  </div>
+
+  <p-table
+    [value]="events()"
+    [lazy]="true"
+    [first]="page() * pageSize"
+    [totalRecords]="total()"
+    [rows]="pageSize"
+    [paginator]="true"
+    [loading]="loading()"
+    (onPage)="onPageChange($event)"
+    styleClass="p-datatable-sm"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Timestamp</th>
+        <th>Device</th>
+        <th>Type</th>
+        <th>Peak (cps)</th>
+        <th>Isotope</th>
+        <th>Status</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-event>
+      <tr>
+        <td>{{ event.timestamp | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+        <td>{{ event.deviceId }}</td>
+        <td>{{ event.eventType }}</td>
+        <td>{{ event.payload?.peakCountRate ?? '—' }}</td>
+        <td>{{ event.payload?.isotope ?? '—' }}</td>
+        <td>
+          <span class="status-badge" [class]="event.platformAlarmStatus === 'ALARM' ? 'badge-alarm' : 'badge-clear'">
+            {{ event.platformAlarmStatus }}
+          </span>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr><td colspan="6" style="text-align:center;color:#94a3b8;padding:2rem">Run a search to see results</td></tr>
+    </ng-template>
+  </p-table>
+</div>

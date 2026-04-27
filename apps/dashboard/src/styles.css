@@ -1,0 +1,104 @@
+@import 'primeicons/primeicons.css';
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f8f9fa;
+  color: #1a1a2e;
+}
+
+/* App shell */
+.app-shell { display: flex; flex-direction: column; min-height: 100vh; }
+
+.site-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background: #1a1a2e;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-brand { display: flex; align-items: center; gap: 0.5rem; }
+.header-site  { font-weight: 700; font-size: 1rem; letter-spacing: 0.05em; color: #7dd3fc; }
+.header-sep   { color: #475569; }
+.header-title { font-size: 0.9rem; color: #94a3b8; }
+
+.header-nav { display: flex; gap: 1.5rem; margin-left: auto; }
+.header-nav a {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.25rem 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+.header-nav a:hover,
+.header-nav a.active { color: #fff; border-bottom-color: #7dd3fc; }
+
+.main-content { flex: 1; padding: 1.5rem; max-width: 1400px; margin: 0 auto; width: 100%; }
+
+.view-title { font-size: 1.25rem; font-weight: 600; margin: 0 0 1.25rem; color: #1a1a2e; }
+
+/* Shared status badges */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.badge-online       { background: #dcfce7; color: #166534; }
+.badge-offline      { background: #fee2e2; color: #991b1b; }
+.badge-active       { background: #fef3c7; color: #92400e; }
+.badge-acknowledged { background: #e2e8f0; color: #475569; }
+.badge-norm         { background: #fef3c7; color: #92400e; }
+.badge-isotope      { background: #fee2e2; color: #991b1b; }
+.badge-alarm        { background: #fee2e2; color: #991b1b; }
+.badge-clear        { background: #dcfce7; color: #166534; }
+
+/* Live Operations view */
+.live-ops { display: flex; flex-direction: column; gap: 1.5rem; }
+.section-header { display: flex; align-items: baseline; gap: 1rem; }
+.online-count { font-size: 0.875rem; color: #64748b; }
+.device-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+
+/* Device card */
+.card-header { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem 0; }
+.card-id     { font-size: 1.1rem; font-weight: 700; }
+.card-body   { display: flex; flex-direction: column; gap: 0.5rem; padding-top: 0.5rem; }
+.card-row    { display: flex; justify-content: space-between; font-size: 0.875rem; }
+.label       { color: #64748b; }
+
+/* Active alarms panel */
+.alarms-section { background: #fff; border-radius: 8px; padding: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+.section-title  { font-size: 1rem; font-weight: 600; margin: 0 0 1rem; display: flex; align-items: center; gap: 0.5rem; }
+.alarm-count    { background: #fee2e2; color: #991b1b; font-size: 0.75rem; font-weight: 700; padding: 0.1rem 0.5rem; border-radius: 9999px; }
+.empty-state    { color: #94a3b8; font-size: 0.875rem; padding: 1rem 0; text-align: center; }
+.alarms-list    { display: flex; flex-direction: column; gap: 0.5rem; }
+.alarm-row      { display: grid; grid-template-columns: 140px 80px 90px 80px 100px 1fr; align-items: center; gap: 1rem; padding: 0.625rem 0.75rem; background: #fff7ed; border-radius: 6px; border-left: 3px solid #f97316; font-size: 0.875rem; }
+.alarm-device   { font-weight: 600; }
+.alarm-time,
+.alarm-peak,
+.alarm-isotope  { color: #475569; }
+
+/* Event Search and Alarm History — shared filter bar */
+.search-bar { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin-bottom: 1.25rem; }
+.search-input { flex: 1; min-width: 220px; }
+
+/* Test Mode panel */
+.test-panel-intro { font-size: 0.8rem; color: #64748b; margin-bottom: 1.25rem; line-height: 1.5; }
+.scenario-list    { display: flex; flex-direction: column; gap: 1rem; }
+.scenario-card    { background: #f8f9fa; border-radius: 6px; padding: 1rem; display: flex; flex-direction: column; gap: 0.5rem; }
+.scenario-label   { font-weight: 600; font-size: 0.875rem; }
+.scenario-desc    { font-size: 0.8rem; color: #64748b; }
+.scenario-btn     { width: 100%; }
