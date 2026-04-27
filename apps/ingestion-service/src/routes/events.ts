@@ -90,6 +90,7 @@ export async function eventsRoutes(app: FastifyInstance) {
     }
 
     ingestionEventsTotal.inc({
+      deviceId: enrichedEvent.deviceId,
       eventType: enrichedEvent.eventType,
       platformAlarmStatus: enrichedEvent.platformAlarmStatus,
     });

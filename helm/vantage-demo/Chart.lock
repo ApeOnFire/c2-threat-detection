@@ -26,5 +26,11 @@ dependencies:
 - name: dashboard
   repository: file://../charts/dashboard
   version: 0.1.0
-digest: sha256:5ed61e97567ef1443daa32048cb72ce5f6486e3650a17f5990c4977677e898aa
-generated: "2026-04-27T08:23:16.3945616+01:00"
+- name: prometheus
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 29.2.1
+- name: grafana
+  repository: https://grafana.github.io/helm-charts
+  version: 10.5.15
+digest: sha256:9cf49bd0666c11b6b864a32e30a867fd888f9d58660646a3ff45ce8c61fa89e0
+generated: "2026-04-27T10:12:19.0536959+01:00"

@@ -100,3 +100,106 @@ dashboard:
   image:
     repository: vantage/dashboard
     tag: ""
+
+# ── Prometheus ──────────────────────────────────────────────────────────────
+prometheus:
+  enabled: true
+  alertmanager:
+    enabled: false
+  prometheus-pushgateway:
+    enabled: false
+  kube-state-metrics:
+    enabled: true
+  prometheus-node-exporter:
+    enabled: false
+  server:
+    persistentVolume:
+      enabled: false        # emptyDir — data resets on pod restart, fine for demo
+    global:
+      scrape_interval: 15s
+      evaluation_interval: 15s
+    baseURL: "http://localhost:8080/prometheus"
+    prefixURL: "/prometheus"
+  extraScrapeConfigs: |
+    - job_name: 'prometheus-server'
+      metrics_path: /prometheus/metrics
+      static_configs:
+        - targets: ['localhost:9090']
+          labels:
+            service: prometheus
+
+
+    - job_name: 'vantage-telemetry-simulator'
+      metrics_path: /metrics
+      static_configs:
+        - targets: ['vantage-demo-telemetry-simulator:3000']
+          labels:
+            service: telemetry-simulator
+
+    - job_name: 'vantage-ingestion-service'
+      metrics_path: /metrics
+      static_configs:
+        - targets: ['vantage-demo-ingestion-service:3001']
+          labels:
+            service: ingestion-service
+
+    - job_name: 'vantage-alert-engine'
+      metrics_path: /metrics
+      static_configs:
+        - targets: ['vantage-demo-alert-engine:3002']
+          labels:
+            service: alert-engine
+
+    - job_name: 'vantage-event-store-service'
+      metrics_path: /metrics
+      static_configs:
+        - targets: ['vantage-demo-event-store-service:3003']
+          labels:
+            service: event-store-service
+
+    - job_name: 'vantage-api-service'
+      metrics_path: /metrics
+      static_configs:
+        - targets: ['vantage-demo-api-service:3004']
+          labels:
+            service: api-service
+
+# ── Grafana ──────────────────────────────────────────────────────────────────
+grafana:
+  enabled: true
+  adminPassword: vantage    # local dev only — overridden at deploy time for EC2 (see Phase 12)
+  resources:
+    requests:
+      memory: 128Mi
+      cpu: 50m
+    limits:
+      memory: 256Mi
+      cpu: 250m
+  grafana.ini:
+    server:
+      root_url: "%(protocol)s://%(domain)s:%(http_port)s/grafana"
+      serve_from_sub_path: true
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+        - name: Prometheus
+          type: prometheus
+          url: http://vantage-demo-prometheus-server:80/prometheus
+          access: proxy
+          isDefault: true
+          uid: vantage-prometheus   # fixed UID — dashboard JSON exports will reference this and resolve correctly on any cluster
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+        - name: vantage
+          orgId: 1
+          folder: Vantage
+          type: file
+          disableDeletion: false
+          updateIntervalSeconds: 30
+          options:
+            path: /var/lib/grafana/dashboards/vantage
+  dashboardsConfigMaps:
+    vantage: vantage-demo-grafana-dashboards

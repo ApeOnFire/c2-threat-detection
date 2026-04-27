@@ -13,3 +13,23 @@ elasticsearch:
 postgres:
   persistence:
     size: 5Gi
+
+prometheus:
+  server:
+    persistentVolume:
+      enabled: true
+      size: 5Gi
+    retention: "7d"
+
+grafana:
+  persistence:
+    enabled: true
+    size: 1Gi
+    storageClassName: ""   # empty string = use cluster default (local-path in K3s)
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 100m
+    limits:
+      memory: 512Mi
+      cpu: 500m

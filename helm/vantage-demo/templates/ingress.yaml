@@ -31,6 +31,24 @@ spec:
                 name: {{ .Release.Name }}-api-service
                 port:
                   number: {{ .Values.global.services.apiService.port }}
+          {{- if .Values.grafana.enabled }}
+          - path: /grafana
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-grafana
+                port:
+                  number: 80
+          {{- end }}
+          {{- if .Values.prometheus.enabled }}
+          - path: /prometheus
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-prometheus-server
+                port:
+                  number: 80
+          {{- end }}
           - path: /
             pathType: Prefix
             backend:

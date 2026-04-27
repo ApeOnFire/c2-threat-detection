@@ -3,7 +3,7 @@ import type { DetectionEvent, RadiationPayload } from '@vantage/types';
 import { evaluate } from '../evaluate.js';
 import { getRules } from '../rules.js';
 import { pool } from '../db.js';
-import { evaluateDurationSeconds } from '../metrics.js';
+import { evaluateDurationSeconds, alarmsTriggeredTotal } from '../metrics.js';
 import { logger } from '../logger.js';
 
 export async function evaluateRoutes(app: FastifyInstance) {
@@ -58,6 +58,7 @@ export async function evaluateRoutes(app: FastifyInstance) {
         alarmId = existing.rows[0].id;
       } else {
         alarmId = insertResult.rows[0].id;
+        alarmsTriggeredTotal.inc({ alarmSubtype: result.alarmSubtype });
       }
 
       await client.query('COMMIT');

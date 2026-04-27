@@ -7,6 +7,6 @@ collectDefaultMetrics({ register: registry });
 export const ingestionEventsTotal = new Counter({
   name: 'ingestion_events_total',
   help: 'Total detection events processed by ingestion-service',
-  labelNames: ['eventType', 'platformAlarmStatus'],
+  labelNames: ['deviceId', 'eventType', 'platformAlarmStatus'],
   registers: [registry],
 });
