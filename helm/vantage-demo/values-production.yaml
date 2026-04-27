@@ -1,23 +1,23 @@
 telemetry-simulator:
   image:
-    repository: ghcr.io/ApeOnFire/vantage-telemetry-simulator
+    repository: ghcr.io/apeonfire/vantage-telemetry-simulator
 
 ingestion-service:
   image:
-    repository: ghcr.io/ApeOnFire/vantage-ingestion-service
+    repository: ghcr.io/apeonfire/vantage-ingestion-service
 
 alert-engine:
   image:
-    repository: ghcr.io/ApeOnFire/vantage-alert-engine
+    repository: ghcr.io/apeonfire/vantage-alert-engine
 
 event-store-service:
   image:
-    repository: ghcr.io/ApeOnFire/vantage-event-store-service
+    repository: ghcr.io/apeonfire/vantage-event-store-service
 
 api-service:
   image:
-    repository: ghcr.io/ApeOnFire/vantage-api-service
+    repository: ghcr.io/apeonfire/vantage-api-service
 
 dashboard:
   image:
-    repository: ghcr.io/ApeOnFire/vantage-dashboard
+    repository: ghcr.io/apeonfire/vantage-dashboard
