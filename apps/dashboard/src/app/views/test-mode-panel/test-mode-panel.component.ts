@@ -44,6 +44,12 @@ export class TestModePanelComponent {
       description: 'PM-01 + PM-02 simultaneously',
       severity: 'danger',
     },
+    {
+      name: 'device-offline',
+      label: 'Device Goes Offline',
+      description: 'PM-01 · heartbeats suppressed for 45 s — appears OFFLINE within ~35 s, then recovers',
+      severity: 'warn',
+    },
   ];
 
   trigger(scenario: Scenario): void {

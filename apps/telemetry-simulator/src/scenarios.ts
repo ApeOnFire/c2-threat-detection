@@ -2,6 +2,7 @@ import crypto from 'node:crypto';
 import type { DetectionEvent, RadiationPayload } from '@vantage/types';
 import { DEVICES, SITE_ID, VENDOR_ID } from './devices.js';
 import { emitEvent } from './emit.js';
+import { suppressHeartbeatsFor } from './loops.js';
 
 export class UnknownScenarioError extends Error {
   constructor(name: string) {
@@ -86,6 +87,12 @@ export async function runScenario(name: string): Promise<void> {
           }),
         ),
       ]);
+      break;
+
+    case 'device-offline':
+      // Suppress PM-01 heartbeats for 45 s — Redis TTL is 30 s, so the device
+      // will appear OFFLINE within ~35 s and recover automatically after 45 s.
+      suppressHeartbeatsFor('PM-01', 45_000);
       break;
 
     default:

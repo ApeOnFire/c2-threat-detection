@@ -58,6 +58,12 @@ function buildHeartbeat(device: Device): Heartbeat {
 }
 
 const handles: NodeJS.Timeout[] = [];
+const suppressedHeartbeats = new Set<string>();
+
+export function suppressHeartbeatsFor(deviceId: string, durationMs: number): void {
+  suppressedHeartbeats.add(deviceId);
+  setTimeout(() => suppressedHeartbeats.delete(deviceId), durationMs).unref();
+}
 
 export function startDetectionLoop(): void {
   logger.info(
@@ -80,6 +86,7 @@ export function startHeartbeatLoop(): void {
   );
   for (const device of DEVICES) {
     handles.push(setInterval(() => {
+      if (suppressedHeartbeats.has(device.deviceId)) return;
       emitHeartbeat(buildHeartbeat(device)).catch((err) => {
         logger.warn({ err, deviceId: device.deviceId }, 'failed to emit heartbeat');
       });
