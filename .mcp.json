@@ -2,9 +2,15 @@
   "mcpServers": {
     "playwright": {
       "command": "npx",
+      "args": ["@playwright/mcp@latest", "--extension"]
+    },
+    "aws-mcp": {
+      "command": "uvx",
       "args": [
-        "@playwright/mcp@latest",
-        "--extension"
+        "mcp-proxy-for-aws@latest",
+        "https://aws-mcp.us-east-1.api.aws/mcp",
+        "--metadata",
+        "AWS_REGION=us-east-1"
       ]
     }
   }

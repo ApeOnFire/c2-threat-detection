@@ -1,0 +1,83 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-push:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      fail-fast: false
+      matrix:
+        service:
+          - alert-engine
+          - ingestion-service
+          - telemetry-simulator
+          - event-store-service
+          - api-service
+          - dashboard
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - uses: docker/setup-buildx-action@v4
+
+      - name: Log in to ghcr.io
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push ${{ matrix.service }}
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: apps/${{ matrix.service }}/Dockerfile
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/vantage-${{ matrix.service }}:sha-${{ github.event.workflow_run.head_sha }}
+            ghcr.io/${{ github.repository_owner }}/vantage-${{ matrix.service }}:latest
+          cache-from: type=gha,scope=${{ matrix.service }}
+          cache-to: type=gha,scope=${{ matrix.service }},mode=max
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/ec2-key
+          chmod 600 ~/.ssh/ec2-key
+          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to EC2
+        run: |
+          ssh -i ~/.ssh/ec2-key rocky@${{ secrets.EC2_HOST }} \
+            "set -e && \
+             cd /opt/vantage-demo && \
+             git pull origin main && \
+             helm repo add prometheus-community https://prometheus-community.github.io/helm-charts --force-update && \
+             helm repo add grafana https://grafana.github.io/helm-charts --force-update && \
+             helm repo update && \
+             helm dependency build helm/vantage-demo && \
+             helm upgrade --install vantage-demo helm/vantage-demo \
+               --values helm/vantage-demo/values-production.yaml \
+               --set global.imageTag=sha-${{ github.event.workflow_run.head_sha }} \
+               --wait --timeout 10m"
