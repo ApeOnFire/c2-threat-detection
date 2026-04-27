@@ -23,22 +23,16 @@ The platform simulates the architecture, not the domain. Detection events come f
 
 ```mermaid
 graph TD
-    subgraph k8s["K3s Cluster · Rocky Linux 9"]
-        subgraph svc["Services"]
-            SIM["telemetry-simulator"]
-            ING["ingestion-service"]
-            ALERT["alert-engine"]
-            EVT["event-store-service"]
-            API["api-service + WebSocket"]
-            ANG["Angular dashboard"]
-        end
-        subgraph infra["Infrastructure"]
-            REDIS[("Redis · BullMQ + cache")]
-            PG[("PostgreSQL")]
-            ES[("Elasticsearch")]
-        end
-        INGRESS["Traefik"]
-    end
+    INGRESS["Traefik"]
+    SIM["telemetry-simulator"]
+    ING["ingestion-service"]
+    ALERT["alert-engine"]
+    REDIS[("Redis · BullMQ + cache")]
+    EVT["event-store-service"]
+    PG[("PostgreSQL")]
+    ES[("Elasticsearch")]
+    API["api-service + WebSocket"]
+    ANG["Angular dashboard"]
 
     SIM -->|HTTP POST detection event| ING
     ING -->|HTTP POST synchronous alarm path| ALERT
