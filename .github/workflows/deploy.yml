@@ -70,7 +70,8 @@ jobs:
       - name: Deploy to EC2
         run: |
           ssh -i ~/.ssh/ec2-key rocky@${{ secrets.EC2_HOST }} \
-            "set -e && \
+            "export KUBECONFIG=/etc/rancher/k3s/k3s.yaml; \
+             set -e && \
              cd /opt/vantage-demo && \
              git pull origin main && \
              helm repo add prometheus-community https://prometheus-community.github.io/helm-charts --force-update && \
@@ -78,6 +79,9 @@ jobs:
              helm repo update && \
              helm dependency build helm/vantage-demo && \
              helm upgrade --install vantage-demo helm/vantage-demo \
+               --namespace vantage \
+               --create-namespace \
                --values helm/vantage-demo/values-production.yaml \
                --set global.imageTag=sha-${{ github.event.workflow_run.head_sha }} \
+               --set grafana.adminPassword=${{ secrets.GRAFANA_ADMIN_PASSWORD }} \
                --wait --timeout 10m"

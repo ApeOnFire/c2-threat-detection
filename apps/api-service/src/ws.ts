@@ -9,6 +9,14 @@ let wss: WebSocketServer | null = null;
 export function initWebSocket(server: Server): void {
   wss = new WebSocketServer({ server });
 
+  const heartbeatInterval = setInterval(() => {
+    wss!.clients.forEach(client => {
+      if (client.readyState === WebSocket.OPEN) client.ping();
+    });
+  }, 30_000);
+
+  wss.on('close', () => clearInterval(heartbeatInterval));
+
   wss.on('connection', (ws: WebSocket, req: IncomingMessage) => {
     if (req.url !== '/ws') {
       ws.close(1008, 'Invalid path');

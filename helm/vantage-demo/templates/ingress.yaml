@@ -7,13 +7,8 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
     helm.sh/chart: {{ include "vantage-demo.chart" . }}
-  annotations:
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
-    nginx.ingress.kubernetes.io/proxy-connect-timeout: "60"
-    nginx.ingress.kubernetes.io/proxy-http-version: "1.1"
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   rules:
     - http:
         paths:
